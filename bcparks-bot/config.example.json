@@ -1,0 +1,24 @@
+{
+  "_comment": "Copy this file to config.json and fill in YOUR details. config.json is git-ignored so your personal info is never committed.",
+
+  "park": "Joffre Lakes",
+  "trail": "",
+  "visitDate": "2026-07-09",
+  "timeSlot": "AM",
+
+  "passCount": 2,
+
+  "contact": {
+    "firstName": "YOUR FIRST NAME",
+    "lastName": "YOUR LAST NAME",
+    "email": "you@example.com",
+    "phone": "6045551234"
+  },
+
+  "vehiclePlate": "",
+
+  "releaseTime": "07:00",
+  "timezone": "America/Vancouver",
+  "headless": false,
+  "autoSubmit": false
+}

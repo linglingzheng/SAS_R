@@ -1,0 +1,14 @@
+{
+  "name": "bcparks-dayuse-helper",
+  "version": "1.0.0",
+  "description": "Guided helper for booking BC Parks day-use passes (e.g. Joffre Lakes)",
+  "main": "reserve.js",
+  "scripts": {
+    "start": "node reserve.js",
+    "wait": "node reserve.js --wait",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}
