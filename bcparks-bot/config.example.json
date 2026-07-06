@@ -3,9 +3,12 @@
 
   "park": "Joffre Lakes",
   "trail": "",
-  "visitDate": "2026-07-09",
-  "timeSlot": "AM",
 
+  "_dates_note": "List every date you'd take. The monitor hunts cancellations on already-released dates AND catches future dates the moment they open at 7am. Use visitDates for several, or visitDate for one.",
+  "visitDates": ["2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10"],
+  "visitDate": "",
+
+  "timeSlot": "AM",
   "passCount": 2,
 
   "contact": {

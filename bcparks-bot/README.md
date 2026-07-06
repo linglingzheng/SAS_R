@@ -75,23 +75,32 @@ npm run wait
 Opens the browser, warms the page, counts down, reloads until 7:00:00, then
 drives the form the moment passes go live.
 
-**2. Monitor for availability / cancellations** (best for a date that's already
-sold out — spots reappear when people cancel):
+**2. Monitor several dates at once** (hunt cancellations on sold-out dates AND
+grab future dates the instant they open) — list them all in `visitDates`:
 ```bash
-node reserve.js --monitor              # checks every 25s for 60 min
-node reserve.js --monitor --minutes 120 --every 20
+node reserve.js --monitor              # sweeps all dates every 25s for 60 min
+node reserve.js --monitor --minutes 240 --every 20
 ```
-It keeps re-checking your date politely, prints the status each time, and the
-moment a pass opens it **sounds an alarm** and automatically fills in your
-details. Sample output:
+Each sweep it checks every date in `visitDates`, prints a status line, and the
+moment ANY pass opens it **sounds an alarm** and auto-fills the form for that
+date. Already-released dates are checked for cancellation openings; dates that
+haven't dropped yet show as `pending` and are caught automatically once their
+7 AM window opens — so leave it running across that time. Sample output:
 ```
-[06:59:55] check #1: no pass — date 2026-07-09 is disabled/greyed out  (60 min left)
+   • 2026-07-07: already released — hunting for cancellations
+   • 2026-07-08: already released — hunting for cancellations
+   • 2026-07-09: not out yet — releases Tue 2026-07-07 07:00
+   • 2026-07-10: not out yet — releases Wed 2026-07-08 07:00
+[06:59:55] sweep #1 — 07-07:none  07-08:none  07-09:pending  07-10:pending  (60 min left)
 [07:00:20] 🎉 A PASS LOOKS AVAILABLE for 2026-07-09! Grabbing it now...
 [07:00:22] Filled "First name" = Jane
-[07:00:22] Filled "Email" = jane@example.com
 ```
-Keep the interval at 20s+ so you stay a polite, human-like visitor and don't
-get rate-limited/blocked.
+You can only book **one date (max 4 passes) per transaction**, so it grabs the
+first date that opens; re-run it to chase the others. Keep `--every` at 20s+ so
+you stay a polite, human-like visitor and don't get rate-limited/blocked.
+
+> To leave it running for many hours across the 7 AM drops, use a long window,
+> e.g. `--minutes 900`, and keep your computer awake.
 
 **3. Go now** (test the flow, or grab leftover passes right away):
 ```bash
