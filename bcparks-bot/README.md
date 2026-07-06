@@ -66,22 +66,58 @@ Open `config.json` and fill in your details:
 
 ---
 
-## Running it
+## Running it — three modes
 
-**On the release morning**, a few minutes before 7:00 AM Pacific:
-
+**1. Wait for the 7 AM release** (best for a brand-new date dropping):
 ```bash
 npm run wait
 ```
+Opens the browser, warms the page, counts down, reloads until 7:00:00, then
+drives the form the moment passes go live.
 
-That opens the browser, warms up the page, counts down, and starts driving the
-form the moment passes go live. It reloads the page for you until 7:00:00.
+**2. Monitor for availability / cancellations** (best for a date that's already
+sold out — spots reappear when people cancel):
+```bash
+node reserve.js --monitor              # checks every 25s for 60 min
+node reserve.js --monitor --minutes 120 --every 20
+```
+It keeps re-checking your date politely, prints the status each time, and the
+moment a pass opens it **sounds an alarm** and automatically fills in your
+details. Sample output:
+```
+[06:59:55] check #1: no pass — date 2026-07-09 is disabled/greyed out  (60 min left)
+[07:00:20] 🎉 A PASS LOOKS AVAILABLE for 2026-07-09! Grabbing it now...
+[07:00:22] Filled "First name" = Jane
+[07:00:22] Filled "Email" = jane@example.com
+```
+Keep the interval at 20s+ so you stay a polite, human-like visitor and don't
+get rate-limited/blocked.
 
-To just run immediately (e.g. to test the flow, or to grab leftover passes):
-
+**3. Go now** (test the flow, or grab leftover passes right away):
 ```bash
 npm start
 ```
+
+### How the personal-information entry works
+
+Once a pass is secured, BC Parks asks for very little — it's a free pass, so
+**there's no payment and no account/login required**. The registration screen
+typically asks for:
+
+| Field | Comes from `config.json` | Notes |
+|---|---|---|
+| First name | `contact.firstName` | the pass holder |
+| Last name | `contact.lastName` | |
+| Email | `contact.email` | your pass/QR code is emailed here — use a real one |
+| Confirm email | `contact.email` | filled with the same value if asked |
+| Phone | `contact.phone` | sometimes optional |
+| Number of passes | `passCount` | 1–4; one per person aged 13+ |
+| Vehicle plate | `vehiclePlate` | only some parks/flows ask; leave "" if unsure |
+| Agree to terms | (auto-checked) | the script ticks the checkbox |
+
+The script types all of these for you. If BC Parks has renamed a field and the
+script can't find it, it **pauses and asks you to fill that one box**, then you
+press Enter and it carries on — so a layout change never leaves you stuck.
 
 ### What you'll see
 
